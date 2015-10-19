@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy>
+        <aop:include name="errorInterceptor" />
+    </aop:aspectj-autoproxy>
+
+    <util:properties id="propertyConfigurer" location="classpath:/META-INF/web.properties"/>
+    <context:property-placeholder
+            properties-ref="propertyConfigurer"
+            system-properties-mode="NEVER"
+            location="classpath:/META-INF/config/services.properties"/>
+
+    <!-- Scans the classpath of this application for @Components to deploy as beans -->
+    <context:component-scan base-package="by.auto.web.controllers"/>
+
+    <!-- Configures the @Controller programming model -->
+    <mvc:annotation-driven conversion-service="conversionService"
+                           ignore-default-model-on-redirect="true"> <!-- The default setting is false but new applications should consider setting it to true. -->
+        <mvc:argument-resolvers>
+            <bean class="by.auto.web.resolvers.AccountHandlerMethodArgumentResolver"/>
+
+
+            <!-- See http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/ 1.5.2. Web pagination -->
+            <!-- The following request parameters are expected to create Pageable argument:
+                page: The page you want to retrieve
+                size: The size of the page you want to retrieve
+                sort: The property that should be sorted by
+                sort.dir: The direction that should be used for sorting
+            -->
+            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+                <property name="fallbackPageable">
+                    <bean class="org.springframework.data.domain.PageRequest"
+                          c:page="0"
+                          c:size="${pagination.default.size}"/>
+                </property>
+                <property name="prefix" value=""/>
+            </bean>
+        </mvc:argument-resolvers>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
+          p:failOnEmptyBeans="false"
+          p:autoDetectFields="false"
+          p:autoDetectGettersSetters="false"
+          p:simpleDateFormat="${api.json.date.time.pattern}">
+        <property name="serializers">
+            <array>
+                <!--todo здесь сериалайзеры для json-->
+                <!--<bean class="by.auto.web.json.PageSerializer"/>-->
+            </array>
+        </property>
+        <!--todo add deserializer-->
+        <!--<property name="deserializersByType">-->
+            <!--<map key-type="java.lang.Class">-->
+                <!--<entry value-ref="intervalDeserializer" key="org.joda.time.Interval"/>-->
+                <!--<entry value-ref="dateTimeDeserializer" key="org.joda.time.DateTime"/>-->
+            <!--</map>-->
+        <!--</property>-->
+        <property name="featuresToEnable">
+            <array>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.MapperFeature.CAN_OVERRIDE_ACCESS_MODIFIERS"/>
+            </array>
+        </property>
+        <property name="featuresToDisable">
+            <array>
+                <util:constant
+                        static-field="com.fasterxml.jackson.databind.MapperFeature.AUTO_DETECT_IS_GETTERS"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="by.auto.web.converters.StringToEnumConverterFactory"/>
+                <bean class="by.auto.web.json.converters.SignUpJSONRequestToAccountConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!-- Fortunately Spring provides means to register custom converting components that allow conversion between
+    a String value to an arbitrary type.
+    See http://static.springsource.org/spring-data/data-jpa/docs/current/reference/html/ 1.5.1. Domain class web binding for Spring MVC
+    -->
+    <!-- Try it, and see whether it is useful to use -->
+    <bean class="org.springframework.data.repository.support.DomainClassConverter" depends-on="conversionService">
+        <constructor-arg ref="conversionService"/>
+    </bean>
+
+    <!-- Configures Handler Interceptors -->
+    <mvc:interceptors>
+        <!-- Changes the locale when a 'lang' request parameter is sent; e.g. /?lang=de -->
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+
+        <bean class="by.auto.web.interceptors.AccountExposingHandlerInterceptor"/>
+        <bean class="by.auto.web.interceptors.UTF8EncodingHandlerInterceptor"/>
+        <bean class="by.auto.web.interceptors.api.ApiRequestParametersValidationHandlerInterceptor">
+            <property name="validators">
+                <list>
+                    <bean class="by.auto.web.interceptors.api.validators.EmailStringParameterValidator"/>
+                </list>
+            </property>
+        </bean>
+    </mvc:interceptors>
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/*.txt" location="/"/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <!-- actually ignored :( -->
+    </bean>
+
+    <!-- Configures the Tiles layout system -->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/layouts/tiles.xml</value>
+                <value>/WEB-INF/views/**/*tiles.xml</value>
+            </list>
+        </property>
+        <property name="checkRefresh" value="true"/>
+    </bean>
+
+    <!-- i18n and l10n -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basenames">
+            <list>
+                <!-- Only for binding, type mismatch and reject value errors
+                     For JSR 303 validation ValidationMessages.properties is used -->
+                <value>/WEB-INF/messages/validation</value>
+                <value>/WEB-INF/messages/messages</value>
+            </list>
+        </property>
+        <property name="cacheSeconds" value="0"/>
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="ru"/>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="${max.upload.size}"/>
+        <property name="resolveLazily" value="${resolve.lazily}"/>
+        <!-- 500kb -->
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+
+
+    <!-- Actually this validator bean is not required, Validator injection works fine without it.
+        Just to satisfy the IDE ) -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    </bean>
+
+    <bean class="by.auto.web.resolvers.UTF8HandlerExceptionResolver"/>
+
+    <!--view controllers-->
+    <mvc:view-controller path="#{T(by.auto.web.routes.Routes).HOME}"/>
+    <mvc:view-controller path="#{T(by.auto.web.routes.Routes$Profile).PROFILE}"/>
+    <mvc:view-controller path="#{T(by.auto.web.routes.Routes).HELP}"/>
+
+</beans>

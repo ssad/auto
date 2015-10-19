@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="mvc-test-mongo-mocks-config.xml"/>
+
+    <bean id="accountRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="by.auto.persistence.repository.mongo.AccountRepository"/>
+    </bean>
+
+    <bean id="generatedTokenRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="by.auto.persistence.repository.mongo.GeneratedTokenRepository"/>
+    </bean>
+
+    <bean id="companyRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="by.auto.persistence.repository.mongo.CompanyRepository"/>
+    </bean>
+
+    <bean id="userRepository" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="by.auto.persistence.repository.mongo.UserRepository"/>
+    </bean>
+</beans>
