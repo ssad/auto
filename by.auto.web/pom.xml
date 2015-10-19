@@ -27,7 +27,6 @@
             <scope>test</scope>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>by.auto</groupId>
             <artifactId>by.auto.persistence</artifactId>
