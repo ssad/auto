@@ -1,8 +1,0 @@
-In order to install new jar into the repo the following steps should be applied:
-1. mvn install:install-file -Dfile=<path to jar file> -DgroupId=<group id> \
-                         -DartifactId=<artifact id> -Dversion=<version> \
-                         -Dpackaging=<packaging, usually jar> -DlocalRepositoryPath=<path to this repository>
-2. java -jar nexus-indexer-3.0.4-cli.jar -t full -i auto -n auto -r <path to this repository> -e -l
-3. Copy generated nexus-maven-repository-index.{gz,properties,zip} into .index folder
-
-You can obtain copy of nexus-indexer-3.0.4-cli.jar in the Dropbox.

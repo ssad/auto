@@ -1,4 +1,0 @@
-<Context docBase="/auto" reloadable="true">
-    <!-- Tomcat 6.x or higher -->
-    <JarScanner scanClassPath="false"/>
-</Context>

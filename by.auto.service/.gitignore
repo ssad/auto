@@ -1,4 +1,0 @@
-src/main/resources/META-INF/config/services.properties
-
-#activemq KahaDB
-activemq-data/localhost/KahaDB/*
