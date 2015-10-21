@@ -1,0 +1,41 @@
+apply plugin: 'jdepend'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+
+jdepend {
+    toolVersion = '2.9.1'
+}
+
+jdependMain {
+    reports {
+        xml.enabled = false
+        text.enabled = true
+    }
+}
+
+pmd {
+    toolVersion = '5.4.0'
+}
+
+checkstyle {
+    toolVersion = '6.11.2'
+    ignoreFailures = false
+}
+
+checkstyleMain {
+    ignoreFailures = false
+}
+
+findbugs {
+    toolVersion = '3.0.1'
+    sourceSets = [sourceSets.main]
+}
+
+findbugsMain {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
