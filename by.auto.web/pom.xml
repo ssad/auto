@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>by.auto.parent</artifactId>
+        <groupId>by.auto</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../by.auto.parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>by.auto.web</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <!--Modules-->
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.domain</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.persistence</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.persistence</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>by.auto</groupId>
+            <artifactId>by.auto.service</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Servlet -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <version>1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jstl-impl</artifactId>
+            <version>1.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Apache Tiles -->
+        <!-- Tiles -->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-el</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-servlet</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-template</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-extras</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- Joda Time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-jsptags</artifactId>
+            <version>1.1.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <version>0.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>by.auto</id>
+            <name>auto Repository</name>
+            <url>file://${basedir}/repo</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <path>/auto</path>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <warSourceDirectory>${project.basedir}/target/${artifactId}-${project.version}</warSourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>by.auto</groupId>
+                <artifactId>by.auto.maven</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <bundles>
+                                <bundle>${project.basedir}/src/main/webapp/WEB-INF/messages</bundle>
+                                <bundle>${project.basedir}/src/main/resources</bundle>
+                            </bundles>
+                            <messagesName>auto.messages</messagesName>
+                            <initCode>window.auto = window.auto || {};</initCode>
+                            <output>${project.basedir}/src/main/webapp/resources/js/generated</output>
+                        </configuration>
+                        <goals>
+                            <goal>generate-javascript-localization-messages</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+    <properties>
+        <profile-id>dev</profile-id>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>amazon</id>
+            <properties>
+                <profile-id>amazon</profile-id>
+            </properties>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>amazon</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>com.samaxes.maven</groupId>
+                        <artifactId>minify-maven-plugin</artifactId>
+                        <version>1.7.2</version>
+                        <executions>
+                            <execution>
+                                <id>default-minify-js</id>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                    <charset>UTF-8</charset>
+                                    <cssSourceDir>resources/css</cssSourceDir>
+                                    <jsSourceDir>resources/js</jsSourceDir>
+                                    <jsIncludes>
+                                        <jsInclude>**/*.js</jsInclude>
+                                    </jsIncludes>
+                                    <jsExcludes>
+                                        <jsExclude>**/*.min.js</jsExclude>
+                                    </jsExcludes>
+                                    <yuiMunge>true</yuiMunge>
+                                    <skipMerge>true</skipMerge>
+                                    <nosuffix>true</nosuffix>
+                                    <jsEngine>YUI</jsEngine>
+                                </configuration>
+                                <goals>
+                                    <goal>minify</goal>
+                                </goals>
+                            </execution>
+
+                            <execution>
+                                <id>default-minify-css</id>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                    <charset>UTF-8</charset>
+                                    <cssSourceDir>resources/css</cssSourceDir>
+                                    <jsSourceDir>resources/js</jsSourceDir>
+                                    <cssSourceFiles>
+                                        <cssSourceFile>animate.css</cssSourceFile>
+                                        <cssSourceFile>bootstrap.css</cssSourceFile>
+                                        <cssSourceFile>style.css</cssSourceFile>
+                                    </cssSourceFiles>
+                                    <cssFinalFile>bootstrap.css</cssFinalFile>
+                                    <jsEngine>YUI</jsEngine>
+                                </configuration>
+                                <goals>
+                                    <goal>minify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
