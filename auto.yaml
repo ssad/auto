@@ -1,0 +1,14 @@
+server:
+  rootPath: /auto/*
+  applicationConnectors:
+    - type: http
+      port: 58080
+  adminConnectors:
+    - type: http
+      port: 58081
+metrics:
+  frequency: 10 minutes
+  reporters:
+    - type: console
+      timeZone: UTC
+      output: stdout

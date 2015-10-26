@@ -1,0 +1,28 @@
+apply plugin: 'application'
+
+ext {
+    configFile = 'auto.yaml'
+}
+
+mainClassName = 'by.auto360.AutoApplication'
+run {
+    args = ['server', configFile]
+}
+run.doFirst {
+    def message = "|| Application is accessible via http://localhost:58080/, admin interface is accessible via http://localhost:58081/ ||"
+    def border = { println '=' * it.length() }
+    border message
+    println message
+    border message
+}
+
+task runServer(dependsOn: run) {
+    description "Run a server, same as 'gradle run'"
+}
+
+task runCheck(type: JavaExec) {
+    description 'Check dropwizard application configuration'
+    main = mainClassName
+    classpath = tasks.run.classpath
+    args = ['check', configFile]
+}
