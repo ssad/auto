@@ -81,3 +81,19 @@ Gradle является основным языком для сборки Androi
 
 ### Дополнение к Persistence Framework
 - Все таки имеет смысл и целесообразно использовать SQL Object API, он фактически аналог Spring Data, только на основе чистого SQL.
+
+## Mon 26 Oct, 2015
+
+### UI/Front-end
+- Связка React (https://facebook.github.io/react/), Flow (http://flowtype.org/), ES6 (https://developer.mozilla.org/en/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_6_support_in_Mozilla) в связке с Babel (https://babeljs.io/), Jest (https://facebook.github.io/jest/) для тестирования, и возможно Relay (https://facebook.github.io/relay/). Возможно также использовать при необходимости react-router (https://github.com/rackt/react-router) и React Templates (http://wix.github.io/react-templates/). Посмотреть Flux (https://facebook.github.io/flux/). Angular и React могут быть использованы одинаково успешно для реализации одного и того же приложения. Причины выбора React в следующем:
+  - библиотека вместо framework-а
+  - низкий порог входа, React более простой в изучении
+  - интеграция с ES6
+  - ES6 - это будущее JavaScript так или иначе, и знать его уже нужно сейчас, и все новые frontend инструменты будут так или иначе базироваться на поддержке и интреграции с ES6
+  - ряд интересных библиотек от Facebook, которые можно использовать совместно с React - Flow, Relay, Jest, "Flux"
+  - наличие React Native (и это не просто для галочки, Facebook реально использует React Native https://code.facebook.com/posts/1189117404435352/react-native-for-android-how-we-built-the-first-cross-platform-react-native-app/ для cross-platform mobile apps)
+  - Angular 2.0 все еще в developer preview, когда будет оф. релиз неизвестно, но он будет, а сейчас тратить время и усилия на Angular 1.0 не целесообразно 
+  - Clojure community очень хорошего мнения о React, а они толковые ребята :)
+- Рассматриваемые альтернативы: Angular 2.0 + Type Script
+- Возможные риски: мне кажется минимальны, с помощью React мы можем построить хороший UI, ES6 + Babel - они сами по себе, и будут использоваться в любом случае. Также поскольку React больше библиотека, чем framework, перейти на что-то другое или интеграция с другой библиотекой должно быть не очень "болезненно".
+- Дополнительные вопросы для изучения: автоматизация сборки UI (инструменты к рассмотрению - http://gulpjs.com/) и headless browser testing (нужно ли?)
