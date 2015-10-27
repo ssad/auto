@@ -94,6 +94,8 @@ Gradle является основным языком для сборки Androi
   - наличие React Native (и это не просто для галочки, Facebook реально использует React Native https://code.facebook.com/posts/1189117404435352/react-native-for-android-how-we-built-the-first-cross-platform-react-native-app/ для cross-platform mobile apps)
   - Angular 2.0 все еще в developer preview, когда будет оф. релиз неизвестно, но он будет, а сейчас тратить время и усилия на Angular 1.0 не целесообразно 
   - Clojure community очень хорошего мнения о React, а они толковые ребята :)
+  - И не маловажный момент, по performance части тут однозначно лидирует с большим отрывом React
 - Рассматриваемые альтернативы: Angular 2.0 + Type Script
 - Возможные риски: мне кажется минимальны, с помощью React мы можем построить хороший UI, ES6 + Babel - они сами по себе, и будут использоваться в любом случае. Также поскольку React больше библиотека, чем framework, перейти на что-то другое или интеграция с другой библиотекой должно быть не очень "болезненно".
 - Дополнительные вопросы для изучения: автоматизация сборки UI (инструменты к рассмотрению - http://gulpjs.com/) и headless browser testing (нужно ли?)
+
