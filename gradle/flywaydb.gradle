@@ -1,0 +1,6 @@
+apply plugin: 'org.flywaydb.flyway'
+
+flyway {
+    url = 'jdbc:h2:file:target/demo'
+    user = 'sa'
+}

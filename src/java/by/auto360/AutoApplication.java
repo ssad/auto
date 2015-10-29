@@ -1,10 +1,13 @@
 package by.auto360;
 
 import by.auto360.config.AutoConfiguration;
+import by.auto360.resources.PersonResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 
 public class AutoApplication extends Application<AutoConfiguration> {
 
@@ -14,7 +17,10 @@ public class AutoApplication extends Application<AutoConfiguration> {
 
     @Override
     public void run(final AutoConfiguration configuration, final Environment environment) throws Exception {
-        environment.jersey().packages("by.auto360.resources");
+        final DBIFactory factory = new DBIFactory();
+        final DBI dbi = factory.build(environment, configuration.getDatabase(), "database");
+//        environment.jersey().register(new CarResource(jdbi.onDemand(CarRepository.class)));
+        environment.jersey().register(new PersonResource(dbi));
     }
 
     @Override
